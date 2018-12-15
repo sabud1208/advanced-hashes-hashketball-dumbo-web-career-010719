@@ -168,17 +168,6 @@ def team_names
  teams
 end
 
-# def player_numbers(team)
-#   players = game_hash.each do |location, data|
-#     return data[:players] if data[:team_name] == team
-#  end
-#  points= []
-#  players.each do |player|
-#  points << player[:points]
-#  end
-#  points
-# end
-
 def player_numbers(team)
   jersey= []
   game_hash.each do |location, data|
@@ -206,21 +195,17 @@ end
 
 def find_biggest_shoe
   all_shoes= []
-  game_hash.each do |location, data|
-    data[:players].each do |players_info|
+  get_players.each do |players_info|
       all_shoes << players_info[:shoe]
-    end
   end
   biggest_shoe = all_shoes.max
 end
 
 def big_shoe_rebounds
   rebounds = 0
-  game_hash.each do |location, data|
-    data[:players].each do |players_info|
+  get_players.each do |players_info|
     if find_biggest_shoe == players_info[:shoe]
       rebounds= players_info[:rebounds]
-      end
     end
   end
   rebounds
