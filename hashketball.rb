@@ -210,3 +210,79 @@ def big_shoe_rebounds
   end
   rebounds
 end
+
+def max_points
+  all_points= []
+  get_players.each do |players_info|
+    all_points << players_info[:points]
+  end
+  most_points= all_points.max
+end
+
+def most_points_scored
+  highest_player= " "
+  get_players.each do|players_info|
+    if max_points == players_info[:points]
+       highest_player = players_info[:player_name]
+     end
+   end
+   highest_player
+ end
+
+
+def home_score
+  total_points = []
+  game_hash[:home][:players].each do |some|
+    total_points << some[:points]
+   end
+  total_points.reduce(:+)
+end
+
+def away_score
+  total_points = []
+  game_hash[:away][:players].each do |some|
+    total_points << some[:points]
+   end
+  total_points.reduce(:+)
+end
+
+def winning_team
+  if away_score < home_score
+    game_hash[:home][:team_name]
+  else
+      game_hash[:away][:team_name]
+   end
+end
+
+def player_with_longest_name
+  all_names = []
+  get_players.each do |players_info, info|
+    all_names << players_info[:player_name]
+  end
+  longest_name= all_names.max_by(&:length)
+  longest_name
+end
+
+def highest_steals
+  highest_steals = []
+  get_players.each do |players_info|
+    highest_steals << players_info[:steals]
+    end
+  theif= highest_steals.max
+  name = " "
+    get_players.each do |players_info|
+    if theif == players_info[:steals]
+     name = players_info[:player_name]
+      end
+    end
+    name
+end
+
+
+def long_name_steals_a_ton?
+  if highest_steals == player_with_longest_name
+    true
+  else
+    false
+  end
+end
