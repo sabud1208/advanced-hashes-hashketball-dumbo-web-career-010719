@@ -288,8 +288,5 @@ def add_points
   points = []
   get_players.each do |players_info|
     points << players_info[:slam_dunks] += 1
-    binding.pry
   end
 end
-
-add_points
