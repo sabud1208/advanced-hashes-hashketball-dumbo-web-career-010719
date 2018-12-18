@@ -121,30 +121,29 @@ end
 
 def get_players
   players_array= []
-  game_hash.each do |location, data|
-  data[:players].each do |player|
-   players_array << player
+  game_hash.each do |location, team_data|
+  team_data[:players].each do |players_stat|
+   players_array << players_stat
   end
 end
 players_array
 end
 
-
 def num_points_scored(name)
   points = 0
-   get_players.each do |info|
-     if name == info[:player_name]
-     points = info[:points]
+   get_players.each do |players_info|
+     if name == players_info[:player_name]
+     points = players_info[:points]
   end
 end
 points
 end
 
-def shoe_size(banana)
+def shoe_size(name)
   shoes= 0
-  get_players.each do |info|
-    if banana == info[:player_name]
-      shoes = info[:shoe]
+  get_players.each do |players_info|
+    if name == players_info[:player_name]
+      shoes = players_info[:shoe]
     end
   end
   shoes
@@ -152,9 +151,9 @@ end
 
 def team_colors(team)
   colors=[]
-  game_hash.each do |location, data|
-    if data[:team_name] == team
-      colors = data[:colors]
+  game_hash.each do |location, team_data|
+    if team_data[:team_name] == team
+      colors = team_data[:colors]
    end
  end
 colors
@@ -162,18 +161,18 @@ end
 
 def team_names
   teams= []
- game_hash.each do |location, data|
-   teams << data[:team_name]
+ game_hash.each do |location, team_data|
+   teams << team_data[:team_name]
  end
  teams
 end
 
 def player_numbers(team)
   jersey= []
-  game_hash.each do |location, data|
-    if data[:team_name] == team
-      data[:players].each do |player|
-        jersey << player[:number]
+  game_hash.each do |location, team_data|
+    if  team == team_data[:team_name]
+      team_data[:players].each do |players_info|
+        jersey << players_info[:number]
       end
     end
   end
@@ -182,12 +181,10 @@ end
 
 def player_stats(name)
   stats = []
-  game_hash.each do |location, data|
-    data[:players].each do |players_info|
-      if  name == players_info[:player_name]
-stats = players_info
+  get_players.each do |players_info|
+      if name == players_info[:player_name]
+         stats = players_info
      end
-   end
   end
   stats.shift
   stats
@@ -232,16 +229,16 @@ def most_points_scored
 
 def home_score
   total_points = []
-  game_hash[:home][:players].each do |some|
-    total_points << some[:points]
+  game_hash[:home][:players].each do |sum|
+    total_points << sum[:points]
    end
   total_points.reduce(:+)
 end
 
 def away_score
   total_points = []
-  game_hash[:away][:players].each do |some|
-    total_points << some[:points]
+  game_hash[:away][:players].each do |sum|
+    total_points << sum[:points]
    end
   total_points.reduce(:+)
 end
@@ -284,5 +281,13 @@ def long_name_steals_a_ton?
     true
   else
     false
+  end
+end
+
+def add_points
+  points = []
+  get_players.each do |players_info|
+    points << players_info[:slam_dunks] += 1
+    binding.pry
   end
 end
