@@ -291,3 +291,5 @@ def add_points
     binding.pry
   end
 end
+
+add_points
